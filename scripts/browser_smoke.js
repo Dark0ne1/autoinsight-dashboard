@@ -1,0 +1,63 @@
+// Run against a started app using Playwright CLI (see docs/VALIDATION.md).
+async (page) => {
+  const errors = [];
+  page.on("pageerror", error => errors.push(error.message));
+  const check = (condition, message) => { if (!condition) throw new Error(message); };
+  await page.goto("http://localhost:3000");
+  await page.getByRole("button", { name: "Use demo dataset" }).click();
+  await page.getByRole("heading", { name: "Your data, understood." }).waitFor();
+  check(await page.locator(".overview-strip > div").first().innerText().then(t => t.includes("728")), "Demo row count is wrong");
+  await page.getByLabel("Filter column", { exact: true }).selectOption("channel");
+  await page.getByLabel("Category filter value").fill("Organic");
+  await page.getByRole("button", { name: "Apply", exact: true }).click();
+  await page.getByRole("button", { name: "Remove channel filter" }).waitFor();
+  check((await page.locator(".overview-strip").innerText()).includes("182"), "Global filter did not change row count");
+  await page.getByRole("combobox", { name: "Chart type", exact: true }).selectOption("bar");
+  await page.getByRole("combobox", { name: "X axis", exact: true }).selectOption("channel");
+  await page.getByRole("combobox", { name: "Y metric", exact: true }).selectOption("revenue");
+  await page.getByRole("combobox", { name: "Aggregation", exact: true }).selectOption("mean");
+  await page.getByRole("button", { name: "Create chart +" }).click();
+  await page.locator("#explore .chart-card").waitFor();
+  await page.getByLabel("Category filter value").fill("Email");
+  await page.getByRole("button", { name: "Apply", exact: true }).click();
+  await page.getByRole("button", { name: "Remove channel filter" }).filter({ hasText: "Email" }).waitFor();
+  await page.waitForFunction(() => document.querySelector("#explore .chart-data tbody")?.textContent?.includes("Email"));
+  await page.getByRole("button", { name: "Clear all", exact: true }).click();
+  await page.waitForFunction(() => document.querySelector(".overview-strip")?.textContent?.includes("728"));
+  await page.getByRole("button", { name: "Next →", exact: true }).click();
+  await page.getByText(/Page 2 of/).waitFor();
+  await page.getByRole("searchbox", { name: "Search records" }).fill("Organic");
+  await page.getByText(/182 records · Page 1/).waitFor();
+  const downloadPromise = page.waitForEvent("download");
+  await page.getByLabel("Export analysis", { exact: true }).selectOption("json");
+  const download = await downloadPromise;
+  await download.saveAs("output/playwright/insights.json");
+  await page.getByRole("button", { name: "Switch to dark mode" }).click();
+  check(await page.locator(".app").evaluate(el => el.classList.contains("dark")), "Dark mode did not toggle");
+  await page.getByRole("button", { name: "Switch to light mode" }).click();
+  const schemas = ["marketing", "sales", "no_date", "missing", "numeric", "text", "empty"];
+  for (const schema of schemas) {
+    await page.getByRole("button", { name: "New dataset" }).click();
+    await page.getByLabel("Upload spreadsheet", { exact: true }).setInputFiles(`output/playwright/fixtures/${schema}.csv`);
+    await page.getByRole("heading", { name: "Your data, understood." }).waitFor();
+    check(await page.locator(".error-banner").count() === 0, `Upload failed: ${schema}`);
+    const expected = schema === "empty" ? "0" : "60";
+    check((await page.locator(".overview-strip > div").first().innerText()).includes(expected), `Row count failed: ${schema}`);
+  }
+  await page.getByRole("button", { name: "New dataset" }).click();
+  await page.getByLabel("Upload spreadsheet", { exact: true }).setInputFiles("output/playwright/fixtures/sheets.xlsx");
+  await page.getByRole("button", { name: "▦ Notes →" }).click();
+  await page.getByRole("heading", { name: "Your data, understood." }).waitFor();
+  check((await page.locator(".overview-strip > div").first().innerText()).includes("2"), "Worksheet selection failed");
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.screenshot({ path: "output/playwright/mobile.png" });
+  check(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), "Mobile layout overflows");
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.getByRole("button", { name: "New dataset" }).click();
+  await page.getByRole("button", { name: "Use demo dataset" }).click();
+  await page.getByRole("heading", { name: "Your data, understood." }).waitFor();
+  await page.locator("#trends .recharts-surface").first().waitFor();
+  await page.screenshot({ path: "output/playwright/dashboard.png" });
+  check(errors.length === 0, errors.join("; "));
+  return { passed: true, scenarios: ["demo", "global filters", "custom chart refilter", "pagination", "search", "JSON export", "theme", ...schemas, "XLSX sheet selection", "mobile layout"], pageErrors: errors };
+}

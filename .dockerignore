@@ -1,0 +1,9 @@
+**/node_modules
+**/.next
+**/__pycache__
+**/.venv
+.git
+.env
+.env.*
+output
+.playwright-cli
