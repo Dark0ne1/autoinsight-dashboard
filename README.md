@@ -8,6 +8,8 @@ Business exports rarely arrive with the same schema. AutoInsight profiles their 
 
 Built as an open-source portfolio project for marketing analytics and technical marketing: Python statistics, data quality, API design, automated analysis and a working Next.js interface in one inspectable pipeline.
 
+This repository is a portfolio showcase with screenshots, source code and a test dataset. There is no hosted application; GitHub Actions only runs tests and builds. Run it locally to try the dashboard.
+
 ## Features
 
 - CSV upload (UTF-8 / Windows-1251; comma, semicolon, tab or pipe) and XLSX worksheet selection.

@@ -59,4 +59,4 @@ git remote add origin https://github.com/Dark0ne1/autoinsight-dashboard.git
 git push -u origin main
 ```
 
-Репозиторий проекта: [Dark0ne1/autoinsight-dashboard](https://github.com/Dark0ne1/autoinsight-dashboard). Приложение развёртывается отдельно по [инструкции](DEPLOYMENT.md).
+Репозиторий проекта: [Dark0ne1/autoinsight-dashboard](https://github.com/Dark0ne1/autoinsight-dashboard). Это витрина учебного проекта: исходники, скриншоты, документация и тестовый датасет. Публичного приложения нет; GitHub Actions только проверяет тесты и сборку. Для самостоятельного запуска есть [инструкция](DEPLOYMENT.md).
