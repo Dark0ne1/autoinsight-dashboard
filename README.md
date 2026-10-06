@@ -29,10 +29,11 @@ AutoInsight определяет роли колонок по значениям
 - Общие фильтры по категориям, числам и датам для KPI, графиков, таблицы, наблюдений и экспорта.
 - Ручное построение графиков с выбором агрегации; поиск, сортировка и постраничный просмотр исходных данных.
 - Русский и английский интерфейс, светлая и тёмная темы, адаптивная компоновка. Исходные названия колонок и значения категорий сохраняются.
+- Стартовый hero с крупным заголовком, мятными иллюстрациями, примером графиков и широкой областью загрузки. Компактное боковое меню и аналитические разделы сохраняют графитовую и кобальтовую палитру.
 - Экспорт наблюдений в JSON и Markdown, а также очищенного CSV с нормализацией типов, удалением точных дубликатов и защитой от формул электронных таблиц.
 - Встроенный синтетический маркетинговый пример и отдельный тестовый CSV в репозитории.
 
-Скриншоты работающего приложения: [загрузка](#screenshots), [обзор](docs/screenshots/dashboard.png), [динамика](docs/screenshots/trends.png), [тёмная тема](docs/screenshots/dark.png), [русский интерфейс](docs/screenshots/onboarding-ru.png).
+Скриншоты работающего приложения обновлены 6 октября 2026 года: [загрузка](#screenshots), [обзор](docs/screenshots/dashboard.png), [динамика](docs/screenshots/trends.png), [тёмная тема](docs/screenshots/dark.png), [русский интерфейс](docs/screenshots/onboarding-ru.png). Значения +32% и 98% в hero иллюстративные; скриншоты анализа используют встроенный маркетинговый датасет.
 
 <a id="ru-docs"></a>
 
@@ -172,7 +173,7 @@ This repository is a portfolio showcase with screenshots, source code and a test
 - Global categorical, numeric and date filters; manual charts with aggregation and scatter grouping.
 - Searchable, sortable, paginated data explorer; light/dark mode and responsive layout.
 - English / Russian interface switch, including analytical findings; original field names and category values remain intact.
-- Product-first empty workspace with file input, explicitly labeled demo KPIs, trend, segments and column profiles. Graphite / cobalt palette and locally bundled Manrope / IBM Plex Mono fonts.
+- Spreadsheet-to-insights hero with serif typography, mint illustrations, an explicitly labeled illustrative dashboard, a wide file drop zone and feature cards. The compact navigation and analytical workspace keep their graphite / cobalt palette; Manrope / IBM Plex Mono fonts are bundled locally.
 - JSON insights, Markdown analysis and normalized, deduplicated, formula-safe CSV export.
 - Seeded marketing demo with intentional quality issues and a spike.
 
@@ -188,7 +189,7 @@ This repository is a portfolio showcase with screenshots, source code and a test
 
 ![Russian interface](docs/screenshots/onboarding-ru.png)
 
-Screenshots show the running application, not mockups. See [validation results](docs/VALIDATION.md) for the tested scenarios and reproducible commands.
+Screenshots were refreshed on 2026-10-06 and show the running application. The hero’s +32% / 98% figures are illustrative, while the analysis screenshots use the built-in marketing dataset. See [validation results](docs/VALIDATION.md) for the tested scenarios and reproducible commands.
 
 ### Documentation
 

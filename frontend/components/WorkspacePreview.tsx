@@ -1,229 +1,139 @@
 "use client";
+import Image from "next/image";
 import {
   Area,
   AreaChart,
   CartesianGrid,
+  Cell,
+  Pie,
+  PieChart,
   ResponsiveContainer,
-  ReferenceDot,
   XAxis,
-  YAxis,
-  Tooltip,
 } from "recharts";
-import {
-  ArrowUpRight,
-  Braces,
-  CircleCheck,
-  Database,
-  ScanLine,
-  TrendingUp,
-} from "lucide-react";
+import { ShieldCheck, TrendingUp } from "lucide-react";
 import { useLocale } from "./LocaleProvider";
-// Static weekly observations from the repository demo, explicitly distinguished from uploaded data.
-const trend = [
-  { x: "01-05", y: 38419 },
-  { x: "01-26", y: 41916 },
-  { x: "02-16", y: 42135 },
-  { x: "03-09", y: 45923 },
-  { x: "03-30", y: 43465 },
-  { x: "04-20", y: 56674 },
-  { x: "05-11", y: 56057 },
-  { x: "05-25", y: 175867 },
-  { x: "06-08", y: 51518 },
-  { x: "06-29", y: 59925 },
-];
+
+// Illustrative onboarding values, not analysis of an uploaded dataset.
+const trend = [18, 30, 23, 43, 31, 51, 44, 58, 61].map((value, index) => ({
+  week: index + 1,
+  value,
+}));
 const segments = [
-  { label: "Organic", share: 34.3 },
-  { label: "Email", share: 28.1 },
-  { label: "Paid search", share: 23.9 },
-  { label: "Social", share: 13.8 },
+  { name: "Product", value: 42, color: "#007c70" },
+  { name: "Marketing", value: 28, color: "#22a58f" },
+  { name: "Operations", value: 18, color: "#7bcebd" },
+  { name: "Other", value: 12, color: "#d6e9e4" },
 ];
+
 export default function WorkspacePreview() {
-  const { t, number, locale } = useLocale();
+  const { t, number } = useLocale();
   return (
-    <section
-      className="workspace-preview"
-      aria-label={t("A first look at the signal")}
+    <figure
+      className="hero-preview"
+      aria-label={t("Illustrative analytics preview")}
     >
-      <div className="preview-header">
-        <div>
-          <span className="eyebrow">{t("02 / OUTPUT PREVIEW")}</span>
-          <h2>{t("A first look at the signal")}</h2>
+      <Image
+        className="hero-backdrop"
+        src="/hero/analytics-backdrop.png"
+        width={900}
+        height={450}
+        alt=""
+        aria-hidden="true"
+        preload
+      />
+      <div className="hero-chart-card" aria-hidden="true">
+        <div className="hero-chart-heading">
+          {t("Trends")}
+          <span>+32%</span>
         </div>
-        <span className="preview-label">{t("DEMO PREVIEW")}</span>
-      </div>
-      <div className="preview-kpis">
-        <article className="panel">
-          <span className="preview-kpi-label">
-            <Database size={13} />
-            {t("Records")}
-          </span>
-          <strong>
-            728<span className="kpi-unit">{t("rows")}</span>
-          </strong>
-          <small>{t("6 metrics / 3 dimensions")}</small>
-        </article>
-        <article className="panel">
-          <span className="preview-kpi-label">
-            <TrendingUp size={13} />
-            {t("Revenue")}
-          </span>
-          <strong>{number(1370830.75)}</strong>
-          <small>{t("Total across the demo")}</small>
-        </article>
-        <article className="panel">
-          <span className="preview-kpi-label">
-            <CircleCheck size={13} />
-            {t("Quality score")}
-          </span>
-          <strong>
-            {number(99.5)}
-            <span className="kpi-unit">/100</span>
-          </strong>
-          <small>{t("8 duplicate rows detected")}</small>
-        </article>
-      </div>
-      <article className="panel preview-trend">
-        <div className="preview-card-heading">
-          <div>
-            <span className="eyebrow">{t("TIME SERIES")}</span>
-            <h3>{t("Revenue over time")}</h3>
-          </div>
-          <span className="muted">{t("Jan — Jun 2026")}</span>
-        </div>
-        <div
-          className="preview-chart"
-          role="img"
-          aria-label={t("Revenue over time")}
-        >
+        <div className="hero-line-chart">
           <ResponsiveContainer width="100%" height="100%" minWidth={0}>
             <AreaChart
               data={trend}
-              margin={{ top: 12, left: -5, right: 12, bottom: 0 }}
+              margin={{ top: 10, right: 10, left: 10, bottom: 0 }}
             >
-              <defs>
-                <linearGradient id="preview-fill" x1="0" y1="0" x2="0" y2="1">
-                  <stop
-                    offset="0%"
-                    stopColor="var(--accent)"
-                    stopOpacity={0.17}
-                  />
-                  <stop
-                    offset="100%"
-                    stopColor="var(--accent)"
-                    stopOpacity={0}
-                  />
-                </linearGradient>
-              </defs>
-              <CartesianGrid strokeDasharray="2 5" vertical={false} />
+              <CartesianGrid
+                vertical={false}
+                stroke="#d9eae5"
+                strokeDasharray="3 5"
+              />
               <XAxis
-                dataKey="x"
-                axisLine={false}
-                tickLine={false}
-                minTickGap={22}
-              />
-              <YAxis
-                width={70}
-                tickFormatter={(v) =>
-                  `${number(Math.round(v / 1000))}${locale === "ru" ? " тыс." : "k"}`
-                }
+                dataKey="week"
+                tick={false}
                 axisLine={false}
                 tickLine={false}
               />
-              <Tooltip formatter={(v) => number(Number(v))} />
               <Area
-                name={t("Revenue")}
-                dataKey="y"
-                type="linear"
-                stroke="var(--accent)"
-                strokeWidth={2}
-                fill="url(#preview-fill)"
+                type="monotone"
+                dataKey="value"
+                stroke="#008d79"
+                strokeWidth={2.5}
+                fill="#c8ebe2"
+                fillOpacity={0.55}
+                dot={{ r: 3.5, fill: "var(--hero-panel)", strokeWidth: 2 }}
                 isAnimationActive={false}
-              />
-              <ReferenceDot
-                x="05-25"
-                y={175867}
-                r={4}
-                fill="#dc735b"
-                stroke="var(--panel)"
               />
             </AreaChart>
           </ResponsiveContainer>
         </div>
-        <div className="preview-chart-footer">
-          <span>{t("Weekly aggregation")}</span>
-          <span>
-            <i />
-            {t("Potential anomaly")}
-          </span>
-        </div>
-      </article>
-      <div className="preview-findings">
-        <article className="panel preview-insight">
-          <span className="eyebrow">
-            <ScanLine size={13} />
-            {t("An observation, not a guess")}
-          </span>
-          <h3>{t("An unusual revenue spike")}</h3>
-          <p>
-            {t(
-              "One week crosses the rolling baseline and the 3 × IQR threshold. Worth a closer look.",
-            )}
-          </p>
-          <span className="evidence-label">
-            <Braces size={13} />
-            {t("Grounded in evidence")}
-            <ArrowUpRight size={13} />
-          </span>
-        </article>
-        <article className="panel preview-segment">
-          <span className="eyebrow">{t("SEGMENT BREAKDOWN")}</span>
-          <h3>{t("Leads by channel")}</h3>
-          {segments.map((s) => (
-            <div className="segment-row" key={s.label}>
-              <span>{s.label}</span>
-              <div>
-                <i style={{ width: `${(s.share / 34.3) * 100}%` }} />
-              </div>
-              <strong>{number(s.share)}%</strong>
-            </div>
-          ))}
-          <small>{t("Share of the demo total")}</small>
-        </article>
       </div>
-      <article className="panel preview-table">
-        <div className="preview-card-heading">
-          <h3>{t("Detected structure")}</h3>
-          <span className="chip">marketing.csv</span>
+      <div className="hero-floating-trend hero-floating-card">
+        <span className="hero-stat-icon">
+          <TrendingUp size={25} />
+        </span>
+        <div>
+          <h3>{t("Trends")}</h3>
+          <strong>+32%</strong>
+          <small>{t("vs. previous period")}</small>
         </div>
-        <table>
-          <thead>
-            <tr>
-              <th>{t("Field")}</th>
-              <th>{t("Semantic type")}</th>
-              <th>{t("Missing")}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {[
-              ["date", "datetime", "0%"],
-              ["channel", "categorical", "0%"],
-              ["revenue", "numeric", "0%"],
-            ].map(([field, type, missing]) => (
-              <tr key={field}>
-                <td>{field}</td>
-                <td>
-                  <span className="type-dot" />
-                  {t(type)}
-                </td>
-                <td>{missing}</td>
-              </tr>
+      </div>
+      <div className="hero-floating-quality hero-floating-card">
+        <ShieldCheck size={27} />
+        <div>
+          <h3>{t("Data quality")}</h3>
+          <strong>98%</strong>
+          <small>{t("Valid rows")}</small>
+          <progress value={98} max={100} aria-label={t("Valid rows")} />
+        </div>
+      </div>
+      <div className="hero-floating-segments hero-floating-card">
+        <h3>{t("Segments")}</h3>
+        <div className="hero-segment-content">
+          <div className="hero-donut" aria-hidden="true">
+            <ResponsiveContainer width="100%" height="100%" minWidth={0}>
+              <PieChart>
+                <Pie
+                  data={segments}
+                  dataKey="value"
+                  innerRadius="58%"
+                  outerRadius="92%"
+                  stroke="none"
+                  isAnimationActive={false}
+                >
+                  {segments.map((s) => (
+                    <Cell key={s.name} fill={s.color} />
+                  ))}
+                </Pie>
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
+          <ul>
+            {segments.map((s) => (
+              <li key={s.name}>
+                <span
+                  className="hero-legend-dot"
+                  style={{ backgroundColor: s.color }}
+                />
+                {t(s.name)}
+                <b>{number(s.value)}%</b>
+              </li>
             ))}
-          </tbody>
-        </table>
-      </article>
-      <p className="preview-disclaimer">
-        {t("Preview only · your analysis will use your uploaded data.")}
-      </p>
-    </section>
+          </ul>
+        </div>
+      </div>
+      <figcaption>
+        {t("Illustrative preview · upload a file for your own results.")}
+      </figcaption>
+    </figure>
   );
 }

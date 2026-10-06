@@ -56,6 +56,17 @@ The redesigned production build was checked in the Codex in-app browser after re
 
 Language/theme are session UI state and reset on page reload. JSON evidence and backend-generated exports retain their canonical field names and English narrative; this is documented in [CODE_GUIDE.md](CODE_GUIDE.md).
 
+## Spreadsheet hero restoration — 2026-10-06
+
+`npm run lint`, `npm run typecheck`, `npm run test:locale` and `npm run build` passed after the final hero changes. The production build was checked in the Codex in-app browser; its console error list was empty.
+
+- EN/RU, light/dark and 390 × 844 mobile layouts checked. At mobile width, document scroll width is 375 px and sidebar scroll height equals its 844 px client height.
+- New upload button → supplied marketing CSV: 1,101 records and 17 fields. Demo button → built-in marketing dataset: 728 records and ten fields; Overview and Trends links work.
+- All five README screenshots were refreshed from the production build and saved as PNG files.
+- Sidebar component and navigation CSS declarations remain unchanged. Decorative hero figures are explicitly labeled as illustrative; analysis screenshots show actual built-in demo results.
+- Full-view and focused reference comparisons, repairs and final assessment are recorded in [design-qa.md](../design-qa.md).
+- The frontend Dockerfile now copies the public image directory into the standalone runtime. Container execution remains unverified because Docker is unavailable on this host.
+
 ## Large CSV checks
 
 The additional [user-provided marketing fixture](../datasets/README.md) was checked through Next.js `/api` rewrites → FastAPI: 132,560 bytes, 1,101 rows, 17 fields, eight charts and ten insights. The returned duplicate count was 18. The temporary test session was deleted after verification; the CSV is included byte-for-byte under `datasets/`.

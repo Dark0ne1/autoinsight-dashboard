@@ -1,6 +1,35 @@
 import type { Chart, Insight, Report } from "./types";
 export type Locale = "en" | "ru";
 export const messages: Record<string, string> = {
+  "YOUR NEXT INSIGHT STARTS HERE": "ВАШ СЛЕДУЮЩИЙ ВЫВОД НАЧИНАЕТСЯ ЗДЕСЬ",
+  "From spreadsheet": "От таблицы",
+  "to ": "к ",
+  "deeper insights.": "глубоким выводам.",
+  "Turn any spreadsheet into an analytical dashboard.":
+    "Превратите любую таблицу в аналитический дашборд.",
+  "Get instant insights on metrics, dimensions, trends and data quality — automatically.":
+    "Метрики, сегменты, динамика и качество данных — автоматически.",
+  "Drop your spreadsheet here": "Перетащите вашу таблицу сюда",
+  "CSV or Excel · up to 100 MB · choose any worksheet":
+    "CSV или Excel · до 100 МБ · любой лист книги",
+  "HERE’S WHAT YOU’LL GET": "ВОТ ЧТО ВЫ ПОЛУЧИТЕ",
+  "Find what’s important in your data, automatically.":
+    "Находите главное в ваших данных автоматически.",
+  "Spot patterns and changes over time.":
+    "Замечайте закономерности и изменения во времени.",
+  "Understand what drives different groups.":
+    "Понимайте различия между группами.",
+  "Catch issues before they impact your analysis.":
+    "Находите проблемы до того, как они повлияют на анализ.",
+  "Illustrative analytics preview": "Иллюстрация аналитического дашборда",
+  "Illustrative preview · upload a file for your own results.":
+    "Пример интерфейса · загрузите файл для своего анализа.",
+  "vs. previous period": "к предыдущему периоду",
+  "Valid rows": "Корректные строки",
+  Product: "Продукт",
+  Marketing: "Маркетинг",
+  Operations: "Операции",
+  Other: "Другое",
   "Upload exceeds size limit.": "Файл превышает ограничение размера.",
   "Group by is supported on scatter plots; use X as the grouping field for bars.":
     "Группировка доступна для точечного графика. Для столбцов используйте поле X.",

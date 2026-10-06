@@ -63,7 +63,7 @@ flowchart TD
 | `frontend/app/globals.css` | Цветовые токены, светлая/тёмная темы, сетки, состояния, адаптивность и reduced motion |
 | `frontend/components/Sidebar.tsx` | Навигация, новый анализ, имя файла и переключатель темы |
 | `frontend/components/UploadScreen.tsx` | File input, drag/drop, состояние обработки, демоданные |
-| `frontend/components/WorkspacePreview.tsx` | Явно отмеченное статическое превью синтетического демо; не анализ загруженного файла |
+| `frontend/components/WorkspacePreview.tsx` | Иллюстрация результата в hero: графики Recharts и явно отмеченные примерные значения; не анализ демо или загруженного файла |
 | `frontend/components/ChartCard.tsx` | Recharts, подписи, визуализация и раскрываемая таблица точек |
 | `frontend/components/Filters.tsx` | Категориальные, числовые и календарные границы общих фильтров |
 | `frontend/components/Explore.tsx` | Запросы ручных графиков. Перестраивает их при изменении Query |
